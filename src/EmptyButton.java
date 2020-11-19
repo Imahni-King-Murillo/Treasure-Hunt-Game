@@ -16,7 +16,6 @@ public class EmptyButton extends JButton
         super();
         treasureGame = newTreasureGame;
         treasureGameView = newTreasureGameView;
-        setText("?");
         setForeground(Color.blue);
         addActionListener(new EmptyButtonListener(this, treasureGame, treasureGameView));
     }

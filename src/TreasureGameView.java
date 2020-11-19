@@ -4,6 +4,8 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
+
 public class TreasureGameView extends JFrame
 {
     // has-a TreasureGame
@@ -18,12 +20,20 @@ public class TreasureGameView extends JFrame
     private JTextField treasuresFoundTextField;
     // has-a textField
     private JTextField lastMoveTextField;
+    // has-many JButtons
+    private JButton[] buttonGrid;
+    // has-a Random
+    private Random randomIndexGenerator;
 
     // Purpose: Construct a TreasureGameView()
     public TreasureGameView(TreasureGame newTreasureGame)
     {
         // Set treasureGame to inputted TreasureGame
         treasureGame = newTreasureGame;
+        // Set the size of the buttonGrid
+        buttonGrid = new JButton[100];
+        // Initialize Random object
+        randomIndexGenerator = new Random();
         // Set the title for the user to see the name of the game
         setTitle("Treasure Hunt Game");
         // Set default close operation
@@ -46,16 +56,28 @@ public class TreasureGameView extends JFrame
         gamePanel.setLayout(gameLayout);
         // Set the layout of the uiPanel to the created BorderLayout
         uiPanel.setLayout(uiLayout);
-        // Loop to add 20 TreasureButtons into the gamePanel
+
+        // Loop to add TreasureButton()'s into random indexes within the buttonGrid
         for (int index = 0; index < 20; index++)
         {
-            gamePanel.add(new TreasureButton(treasureGame, this));
+            int insertionIndex = randomIndexGenerator.nextInt(99);
+            buttonGrid[insertionIndex] = new TreasureButton(treasureGame, this);
         }
-        // Loop to add 100 EmptyButtons into the gamePanel
-        for (int index = 0; index < 80; index++)
+        // Loop to add EmptyButton()'s into remaining null indexes within the buttonGrid
+        for (int index = 0; index < 100; index++)
         {
-            gamePanel.add(new EmptyButton(treasureGame, this));
+            // if the current index is null, add an EmptyButton() into it
+            if (buttonGrid[index] == null)
+            {
+                buttonGrid[index] = new EmptyButton(treasureGame, this);
+            }
         }
+        // Loop to add all of the contents of the buttonGrid into the gamePanel
+        for (int index = 0; index < 100; index++)
+        {
+            gamePanel.add(buttonGrid[index]);
+        }
+
         // Set the text and color of the gameLabel
         gameLabel = new JLabel("Treasure Hunt!");
         // Set the color of the gameLabel
@@ -147,11 +169,14 @@ public class TreasureGameView extends JFrame
     {
         if (treasureGame.getNumberOfTriesLeft() <= 0 && treasureGame.getNumberOfTreasuresFound() < 20)
         {
-            lastMoveTextField.setText("Game Over - You Lose");
+            lastMoveTextField.setText("GAME OVER - You Lose");
+            lastMoveTextField.setBackground(Color.red);
+            lastMoveTextField.setForeground(Color.white);
         }
         else if (treasureGame.getNumberOfTreasuresFound() >= 20)
         {
-            lastMoveTextField.setText("Game Over- You Win!");
+            lastMoveTextField.setText("GAME OVER - You Win!");
+            lastMoveTextField.setBackground(Color.green);
         }
         else
         {
@@ -160,7 +185,7 @@ public class TreasureGameView extends JFrame
     }
 
     // Purpose: Method to begin a Treasure Hunt Game
-    public static void main()
+    public static void main(String[] args)
     {
         TreasureGame treasureGame = new TreasureGame();
         TreasureGameView treasureGameView = new TreasureGameView(treasureGame);
