@@ -57,11 +57,17 @@ public class TreasureGameView extends JFrame
         // Set the layout of the uiPanel to the created BorderLayout
         uiPanel.setLayout(uiLayout);
 
+        // counter for the loop below to insure 20 TreasureButtons are inserted
+        int counter = 0;
         // Loop to add TreasureButton()'s into random indexes within the buttonGrid
-        for (int index = 0; index < 20; index++)
+        while (counter < 20)
         {
             int insertionIndex = randomIndexGenerator.nextInt(99);
-            buttonGrid[insertionIndex] = new TreasureButton(treasureGame, this);
+            if (buttonGrid[insertionIndex] == null)
+            {
+                buttonGrid[insertionIndex] = new TreasureButton(treasureGame, this);
+                counter++;
+            }
         }
         // Loop to add EmptyButton()'s into remaining null indexes within the buttonGrid
         for (int index = 0; index < 100; index++)
@@ -158,6 +164,25 @@ public class TreasureGameView extends JFrame
     public void setTreasuresFoundTextField(String newText)
     {
         treasuresFoundTextField.setText(newText);
+    }
+
+    // Purpose: Reveal position of remaining TreasureButtons (if any)
+    public void revealTreasureButtons()
+    {
+        // Code here...
+    }
+
+    // Purpose: Disable all buttons in button grid if the game is over
+    public void setButtonState()
+    {
+        treasureGame.setGameStatus();
+        if (treasureGame.getGameStatus())
+        {
+            for (int index = 0; index < 100; index++)
+            {
+                buttonGrid[index].setEnabled(false);
+            }
+        }
     }
 
     /**

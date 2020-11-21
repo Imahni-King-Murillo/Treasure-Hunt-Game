@@ -37,6 +37,10 @@ public class EmptyButtonListener implements ActionListener
         treasureGameView.setTriesLeftTextField("Number of Tries Left: " + Integer.toString(treasureGame.getNumberOfTriesLeft()));
         // Set text within the treasure game view lastMoveTextField
         treasureGameView.setLastMoveTextField("Last Move: Nothing...");
+        // Call revealTreasureButtons
+        treasureGameView.revealTreasureButtons();
+        // Call setButtonState function
+        treasureGameView.setButtonState();
         // Disable the button
         emptyButton.setEnabled(false);
     }

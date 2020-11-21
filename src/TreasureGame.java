@@ -9,6 +9,8 @@ public class TreasureGame
     private int numberOfTreasures;
     // has-a number of treasures found
     private int numberOfTreasuresFound;
+    // has-a game over boolean
+    private boolean gameOver = false;
 
     public TreasureGame()
     {
@@ -29,8 +31,11 @@ public class TreasureGame
 
     public void reduceNumberOfTreasuresHidden()
     {
-        numberOfTreasures--;
-        numberOfTreasuresFound++;
+        if(numberOfTries > 0)
+        {
+            numberOfTreasures--;
+            numberOfTreasuresFound++;
+        }
     }
 
     public int getNumberOfTreasuresLeft()
@@ -41,5 +46,18 @@ public class TreasureGame
     public int getNumberOfTreasuresFound()
     {
         return numberOfTreasuresFound;
+    }
+
+    public void setGameStatus()
+    {
+        if (numberOfTreasuresFound == 20 || numberOfTries == 0)
+        {
+            gameOver = true;
+        }
+    }
+
+    public boolean getGameStatus()
+    {
+        return gameOver;
     }
 }

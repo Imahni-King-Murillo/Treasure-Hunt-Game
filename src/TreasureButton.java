@@ -1,13 +1,23 @@
+import javax.swing.*;
+import java.awt.*;
+
 /**
  *
  */
 
-public class TreasureButton extends EmptyButton
+public class TreasureButton extends JButton
 {
-    public TreasureButton(TreasureGame treasureGame, TreasureGameView treasureGameView)
+    // has-a TreasureGame();
+    private TreasureGame treasureGame;
+    // has-a TreasureGameView();
+    private TreasureGameView treasureGameView;
+
+    public TreasureButton(TreasureGame newTreasureGame, TreasureGameView newTreasureGameView)
     {
-        super(treasureGame, treasureGameView);
-        setText("T");
-        addActionListener(new TreasureButtonListener(treasureGame, treasureGameView));
+        super();
+        treasureGame = newTreasureGame;
+        treasureGameView = newTreasureGameView;
+        setForeground(Color.blue);
+        addActionListener(new TreasureButtonListener(this,treasureGame, treasureGameView));
     }
 }
