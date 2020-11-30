@@ -1,9 +1,5 @@
-/**
- *
- */
 
 import javax.swing.*;
-import java.awt.*;
 public class EmptyButton extends JButton
 {
     // has-a TreasureGame();
@@ -11,12 +7,19 @@ public class EmptyButton extends JButton
     // has-a TreasureGameView();
     private TreasureGameView treasureGameView;
 
+    /**
+     * Purpose: Construct an EmptyButton
+     * Input: 1 TreasureGame, 1 TreasureGameView
+     * Output: None
+     */
     public EmptyButton(TreasureGame newTreasureGame, TreasureGameView newTreasureGameView)
     {
         super();
+        // Assign treasureGame to inputted TreasureGame
         treasureGame = newTreasureGame;
+        // Assign treasureGameView to inputted TreasureGameView
         treasureGameView = newTreasureGameView;
-        setForeground(Color.blue);
+        // Add an EmptyButtonListener as the action listener
         addActionListener(new EmptyButtonListener(this, treasureGame, treasureGameView));
     }
 }

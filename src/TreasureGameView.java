@@ -1,6 +1,3 @@
-/**
- *
- */
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +22,10 @@ public class TreasureGameView extends JFrame
     // has-a Random
     private Random randomIndexGenerator;
 
-    // Purpose: Construct a TreasureGameView()
+    /**
+     * Purpose: construct a TreasureGameView
+     * Input: 1 TreasureGame
+     */
     public TreasureGameView(TreasureGame newTreasureGame)
     {
         // Set treasureGame to inputted TreasureGame
@@ -62,25 +62,33 @@ public class TreasureGameView extends JFrame
         // Loop to add TreasureButton()'s into random indexes within the buttonGrid
         while (counter < 20)
         {
+            // Create a random int upon every iteration
             int insertionIndex = randomIndexGenerator.nextInt(99);
+            // if the randomly selected index is null...
             if (buttonGrid[insertionIndex] == null)
             {
+                // Add new button to random grid index
                 buttonGrid[insertionIndex] = new TreasureButton(treasureGame, this);
+                // Add 1 to counter
                 counter++;
-            }
-        }
+            } // end of if-statement
+        } // end of while-loop
+
         // Loop to add EmptyButton()'s into remaining null indexes within the buttonGrid
         for (int index = 0; index < 100; index++)
         {
             // if the current index is null, add an EmptyButton() into it
             if (buttonGrid[index] == null)
             {
+                // Add new button into current null index
                 buttonGrid[index] = new EmptyButton(treasureGame, this);
             }
-        }
+        } // end of for-loop
+
         // Loop to add all of the contents of the buttonGrid into the gamePanel
         for (int index = 0; index < 100; index++)
         {
+            // Add every button in the button grid to the gamePanel
             gamePanel.add(buttonGrid[index]);
         }
 
@@ -136,83 +144,39 @@ public class TreasureGameView extends JFrame
         setVisible(true);
     }
 
-    /**
-     * Purpose: Set the text within the triesLeftTextField
-     * Input: String
-     * Output: None;
-     */
-    public void setTriesLeftTextField(String newText)
+    // Purpose: Call the foundTreasure method
+    public void foundTreasure()
     {
-        triesLeftTextField.setText(newText);
+        treasureGame.foundTreasure(lastMoveTextField, triesLeftTextField, treasuresLeftTextField, treasuresFoundTextField);
     }
 
-    /**
-     * Purpose: Set the text within the treasuresLeftTextField
-     * Input: String
-     * Output: None;
-     */
-    public void setTreasuresLeftTextField(String newText)
+    // Purpose: Call the foundNothing method
+    public void foundNothing()
     {
-        treasuresLeftTextField.setText(newText);
+        treasureGame.foundNothing(lastMoveTextField, triesLeftTextField);
     }
 
-    /**
-     * Purpose: Set the text within the treasuresFoundTextField
-     * Input: String
-     * Output: None
-     */
-    public void setTreasuresFoundTextField(String newText)
+    // Purpose: Call the endGame method, disable all enabled buttons and show all remaining TreasureButtons
+    public void tryToEndGame()
     {
-        treasuresFoundTextField.setText(newText);
-    }
-
-    // Purpose: Reveal position of remaining TreasureButtons (if any)
-    public void revealTreasureButtons()
-    {
-        // Code here...
-    }
-
-    // Purpose: Disable all buttons in button grid if the game is over
-    public void setButtonState()
-    {
-        treasureGame.setGameStatus();
-        if (treasureGame.getGameStatus())
+        treasureGame.endGame(lastMoveTextField);
+        // loop to show the the text behind and disable all remaining enabled buttons
+        for (int index = 0; index < 100; index++)
         {
-            for (int index = 0; index < 100; index++)
-            {
-                buttonGrid[index].setEnabled(false);
-            }
+            // Code here...
         }
     }
 
-    /**
-     * Purpose: Update the lastMoveTextField
-     * Input: String
-     * Output: None
-     */
-    public void setLastMoveTextField(String newText)
-    {
-        if (treasureGame.getNumberOfTriesLeft() <= 0 && treasureGame.getNumberOfTreasuresFound() < 20)
-        {
-            lastMoveTextField.setText("GAME OVER - You Lose");
-            lastMoveTextField.setBackground(Color.red);
-            lastMoveTextField.setForeground(Color.white);
-        }
-        else if (treasureGame.getNumberOfTreasuresFound() >= 20)
-        {
-            lastMoveTextField.setText("GAME OVER - You Win!");
-            lastMoveTextField.setBackground(Color.green);
-        }
-        else
-        {
-            lastMoveTextField.setText(newText);
-        }
-    }
-
-    // Purpose: Method to begin a Treasure Hunt Game
-    public static void main(String[] args)
+    // Purpose: Create a TreasureGame and TreasureGameView
+    public static void play()
     {
         TreasureGame treasureGame = new TreasureGame();
         TreasureGameView treasureGameView = new TreasureGameView(treasureGame);
+    }
+
+    // Purpose: Call the play method
+    public static void main(String[] args)
+    {
+        TreasureGameView.play();
     }
 }

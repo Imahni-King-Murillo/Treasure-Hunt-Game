@@ -1,6 +1,3 @@
-/**
- *
- */
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -32,15 +29,9 @@ public class EmptyButtonListener implements ActionListener
         // Set treasureButton text to an "X"
         emptyButton.setText("X");
         // Take away 1 from number of tries
-        treasureGame.reduceNumberOfTries();
-        // Set text within the treasure game view triesLeftTextField
-        treasureGameView.setTriesLeftTextField("Number of Tries Left: " + Integer.toString(treasureGame.getNumberOfTriesLeft()));
-        // Set text within the treasure game view lastMoveTextField
-        treasureGameView.setLastMoveTextField("Last Move: Nothing...");
-        // Call revealTreasureButtons
-        treasureGameView.revealTreasureButtons();
-        // Call setButtonState function
-        treasureGameView.setButtonState();
+        treasureGameView.foundNothing();
+        // Try to end game
+        treasureGameView.tryToEndGame();
         // Disable the button
         emptyButton.setEnabled(false);
     }
