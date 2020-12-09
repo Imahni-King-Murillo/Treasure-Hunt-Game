@@ -1,11 +1,15 @@
 
 import javax.swing.*;
+import java.awt.*;
+
 public class EmptyButton extends JButton
 {
     // has-a TreasureGame();
     private TreasureGame treasureGame;
     // has-a TreasureGameView();
     private TreasureGameView treasureGameView;
+    // has-a boolean
+    private boolean buttonStatus = true;
 
     /**
      * Purpose: Construct an EmptyButton
@@ -23,9 +27,24 @@ public class EmptyButton extends JButton
         addActionListener(new EmptyButtonListener(this, treasureGame, treasureGameView));
     }
 
-    // Purpose: Return a string to set the button text to
-    public String revealButtonText()
+    public Icon revealIcon()
     {
-        return "X";
+        Icon emptyIcon = new ImageIcon("img/empty.png");
+        return emptyIcon;
+    }
+
+    public void setButtonStatus(boolean status)
+    {
+        buttonStatus = status;
+    }
+
+    public boolean getButtonStatus()
+    {
+        return buttonStatus;
+    }
+
+    public Color revealBorder()
+    {
+        return Color.black;
     }
 }

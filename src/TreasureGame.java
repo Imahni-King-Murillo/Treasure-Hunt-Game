@@ -33,20 +33,26 @@ public class TreasureGame
     // Purpose: Subtract 1 from numberOfTries
     public void reduceNumberOfTries()
     {
-        numberOfTries--;
+        if (!isGameOver())
+        {
+            numberOfTries--;
+        }
     }
 
     // Purpose: Subtract 1 from number of trolls on board and reset all treasure
     public void foundTroll()
     {
-        // subtract 1 from number of tries
-        reduceNumberOfTries();
-        // subtract 1 from number of trolls
-        numberOfTrolls--;
-        // set changeInPointAmount to the negative of the most recent amount of points
-        changeInPointAmount = 0 - numberOfPoints;
-        // reset number of points recieved
-        numberOfPoints = 0;
+        if (!isGameOver())
+        {
+            // subtract 1 from number of tries
+            reduceNumberOfTries();
+            // subtract 1 from number of trolls
+            numberOfTrolls--;
+            // set changeInPointAmount to the negative of the most recent amount of points
+            changeInPointAmount = 0 - numberOfPoints;
+            // reset number of points recieved
+            numberOfPoints = 0;
+        }
     }
 
     /**
@@ -56,20 +62,23 @@ public class TreasureGame
      */
     public void foundTreasure()
     {
-        // Declare random to choose a random number
-        Random randomPointIndexGenerator = new Random();
-        // Make a random number
-        int pointIndex = randomPointIndexGenerator.nextInt(3);
-        // create int to hold current numberOfPoints
-        int currentNumberOfPoints = numberOfPoints;
-        // subtract 1 from number of tries
-        reduceNumberOfTries();
-        // subtract 1 from number of treasures
-        numberOfTreasures--;
-        // add the selected index of the pointOptions array to numberOfPoints
-        numberOfPoints += pointOptions[pointIndex];
-        // assign the difference between the old number of points and the new number of points to changeInPointAmount
-        changeInPointAmount = numberOfPoints - currentNumberOfPoints;
+        if (!isGameOver())
+        {
+            // Declare random to choose a random number
+            Random randomPointIndexGenerator = new Random();
+            // Make a random number
+            int pointIndex = randomPointIndexGenerator.nextInt(3);
+            // create int to hold current numberOfPoints
+            int currentNumberOfPoints = numberOfPoints;
+            // subtract 1 from number of tries
+            reduceNumberOfTries();
+            // subtract 1 from number of treasures
+            numberOfTreasures--;
+            // add the selected index of the pointOptions array to numberOfPoints
+            numberOfPoints += pointOptions[pointIndex];
+            // assign the difference between the old number of points and the new number of points to changeInPointAmount
+            changeInPointAmount = numberOfPoints - currentNumberOfPoints;
+        }
     }
 
     /**
@@ -79,8 +88,11 @@ public class TreasureGame
      */
     public void foundNothing()
     {
-        // subtract 1 from number of tries
-        reduceNumberOfTries();
+        if (!isGameOver())
+        {
+            // subtract 1 from number of tries
+            reduceNumberOfTries();
+        }
     }
 
     /** Purpose: Check if the game is over and return the boolean status

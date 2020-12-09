@@ -1,9 +1,14 @@
+import javax.swing.*;
+import java.awt.*;
+
 public class TrollButton extends EmptyButton
 {
     // has-a TreasureGame();
     private TreasureGame treasureGame;
     // has-a TreasureGameView();
     private TreasureGameView treasureGameView;
+    // has-a boolean
+    private boolean buttonStatus = true;
 
     /**
      * Purpose: Create a TrollButton
@@ -24,8 +29,24 @@ public class TrollButton extends EmptyButton
         addActionListener(new TrollButtonListener(this, treasureGame, treasureGameView));
     }
 
-    public String revealButtonText()
+    public Icon revealIcon()
     {
-        return "Troll!";
+        Icon trollIcon = new ImageIcon("img/troll.png");
+        return trollIcon;
+    }
+
+    public void setButtonStatus(boolean status)
+    {
+        buttonStatus = status;
+    }
+
+    public boolean getButtonStatus()
+    {
+        return buttonStatus;
+    }
+
+    public Color revealBorder()
+    {
+        return Color.red;
     }
 }

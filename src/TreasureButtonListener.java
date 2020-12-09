@@ -3,6 +3,7 @@
  */
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class TreasureButtonListener implements ActionListener
@@ -12,14 +13,14 @@ public class TreasureButtonListener implements ActionListener
     // has-a TreasureGameView
     private TreasureGameView treasureGameView;
     // has-a JButton
-    private JButton treasureButton;
+    private TreasureButton treasureButton;
 
     /**
      * Purpose: Construct a TreasureButtonListener
      * Input:
      * Output: None
      */
-    public TreasureButtonListener(JButton newButton, TreasureGame newTreasureGame, TreasureGameView newTreasureGameView)
+    public TreasureButtonListener(TreasureButton newButton, TreasureGame newTreasureGame, TreasureGameView newTreasureGameView)
     {
         treasureButton = newButton;
         treasureGame = newTreasureGame;
@@ -29,13 +30,18 @@ public class TreasureButtonListener implements ActionListener
     // Purpose: Whenever this listener is called, carryout the actions within the method
     public void actionPerformed(ActionEvent e)
     {
-        // Set button text
-        treasureButton.setText("$");
-        // Do the foundTreasure function from TreasureGame
-        treasureGameView.foundTreasure();
-        // Try to end game
-        treasureGameView.endGame();
-        // Disable button
-        treasureButton.setEnabled(false);
+        if (!treasureGame.isGameOver())
+        {
+            // set image
+            treasureButton.setIcon(treasureButton.revealIcon());
+            // Do the foundTreasure function from TreasureGame
+            treasureGameView.foundTreasure();
+            // set button status to false
+            treasureButton.setButtonStatus(false);
+            // Try to end game
+            treasureGameView.endGame();
+            // remove action listener
+            treasureButton.removeActionListener(treasureButton.getActionListeners()[0]);
+        }
     }
 }

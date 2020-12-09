@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.Random;
 import java.awt.event.*;
@@ -21,6 +22,12 @@ public class TreasureGameView extends JFrame
     private JLabel emptyLegendLabel;
     // has-a label
     private JLabel trollLegendLabel;
+    // has-an Icon
+    private Icon treasureIcon = new ImageIcon("img/treasure.png");
+    // has-an Icon
+    private Icon emptyIcon = new ImageIcon("img/empty.png");
+    // has-an Icon
+    private Icon trollIcon = new ImageIcon("img/troll.png");
     // has-a menu bar
     private JMenuBar menuBar;
     // has-an options menu
@@ -46,6 +53,8 @@ public class TreasureGameView extends JFrame
         randomIndexGenerator = new Random();
         // Set the title for the user to see the name of the game
         setTitle("Treasure Hunt Game");
+        // Set window size
+        setSize(1000, 600);
         // Set default close operation
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Create a 10x10 grid layout for the game
@@ -148,19 +157,25 @@ public class TreasureGameView extends JFrame
         // Make the lastMoveTextField uneditable
         lastMoveTextField.setEditable(false);
         // Set the text of the treasureLegendLabel
-        treasureLegendLabel = new JLabel("$ = A Treasure");
+        treasureLegendLabel = new JLabel(" = A Treasure");
+        // set icon of treasureLegendLabel
+        treasureLegendLabel.setIcon(treasureIcon);
         // set background color of the treasureLegendLabel
         treasureLegendLabel.setBackground(Color.white);
         // Make label background visible
         treasureLegendLabel.setOpaque(true);
         // Set the text of the emptyLegendLabel
-        emptyLegendLabel = new JLabel("X = No Treasure");
+        emptyLegendLabel = new JLabel(" = No Treasure");
+        // set icon of treasureLegendLabel
+        emptyLegendLabel.setIcon(emptyIcon);
         // set the background color of the emptyLegendLabel
         emptyLegendLabel.setBackground(Color.white);
         // Make label background visible
         emptyLegendLabel.setOpaque(true);
         // Set the text of the trollLegendLabel
-        trollLegendLabel = new JLabel("Troll! = A Troll. All Treasure Is Taken!");
+        trollLegendLabel = new JLabel(" = A Troll. All Points Lost!");
+        // set icon of trollLegendLabel
+        trollLegendLabel.setIcon(trollIcon);
         // set the background color of the trollLegendLabel
         trollLegendLabel.setBackground(Color.white);
         // Make label background visible
@@ -194,9 +209,6 @@ public class TreasureGameView extends JFrame
 
         // Add the UI panel into the JFrame
         add(uiPanel);
-
-        // Pack the JFrame size to the size of the gamePanel
-        pack();
         // Set visibility to true in order for the JFrame to show up
         setVisible(true);
     }
@@ -336,7 +348,7 @@ public class TreasureGameView extends JFrame
         if(!treasureGame.isGameOver())
         {
             // update lastMoveText field
-            lastMoveTextField.setText("Last Move: Troll! All Points Lost!");
+            lastMoveTextField.setText("Last Move: Troll!");
         } // end of if-statement
     }
 
@@ -362,10 +374,13 @@ public class TreasureGameView extends JFrame
             {
                 // create an EmptyButton to assign the buttonGrid[index] to
                 EmptyButton button = buttonGrid[index];
-                // Set the current button text to string returned by the current button's revealButtonText() method
-                button.setText(button.revealButtonText());
-                // disable current button
-                button.setEnabled(false);
+                if (button.getButtonStatus())
+                {
+                    // Set the current button text to string returned by the current button's revealButtonText() method
+                    button.setIcon(button.revealIcon());
+                    // set button border
+                    button.setBorder(BorderFactory.createLineBorder(button.revealBorder(), 2));
+                }
             }
         }
     }

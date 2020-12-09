@@ -11,6 +11,8 @@ public class TreasureButton extends EmptyButton // is-a(n) EmptyButton
     private TreasureGame treasureGame;
     // has-a TreasureGameView();
     private TreasureGameView treasureGameView;
+    // has-a boolean
+    private boolean buttonStatus = true;
 
     /**
      * Purpose: Construct a TreasureButton
@@ -31,9 +33,24 @@ public class TreasureButton extends EmptyButton // is-a(n) EmptyButton
         addActionListener(new TreasureButtonListener(this, treasureGame, treasureGameView));
     }
 
-    // Purpose: Return a string to set the button text to
-    public String revealButtonText()
+    public Icon revealIcon()
     {
-        return "$";
+        Icon treasureIcon = new ImageIcon("img/treasure.png");
+        return treasureIcon;
+    }
+
+    public void setButtonStatus(boolean status)
+    {
+        buttonStatus = status;
+    }
+
+    public boolean getButtonStatus()
+    {
+        return buttonStatus;
+    }
+
+    public Color revealBorder()
+    {
+        return Color.green;
     }
 }

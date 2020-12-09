@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class TrollButtonListener implements ActionListener
@@ -25,16 +26,18 @@ public class TrollButtonListener implements ActionListener
     // Purpose: Whenever this listener is called, carryout the actions within the method
     public void actionPerformed(ActionEvent e)
     {
-        Icon trollIcon = new ImageIcon("img/troll.png");
-        // set button image
-        trollButton.setIcon(trollIcon);
-        // Set button text
-        //trollButton.setText(trollButton.revealButtonText());
-        // Do the foundTroll function from TreasureGame
-        treasureGameView.foundTroll();
-        // Try to end game
-        treasureGameView.endGame();
-        // remove action listener
-        trollButton.removeActionListener(trollButton.getActionListeners()[0]);
+        if (!treasureGame.isGameOver())
+        {
+            // set button image
+            trollButton.setIcon(trollButton.revealIcon());
+            // Do the foundTroll function from TreasureGame
+            treasureGameView.foundTroll();
+            // set button status to false
+            trollButton.setButtonStatus(false);
+            // Try to end game
+            treasureGameView.endGame();
+            // remove action listener
+            trollButton.removeActionListener(trollButton.getActionListeners()[0]);
+        }
     }
 }
