@@ -1,11 +1,4 @@
-import javax.swing.*;
-import java.awt.*;
-
-/**
- *
- */
-
-public class TreasureButton extends EmptyButton // is-a(n) EmptyButton
+public class TrollButton extends EmptyButton
 {
     // has-a TreasureGame();
     private TreasureGame treasureGame;
@@ -13,11 +6,11 @@ public class TreasureButton extends EmptyButton // is-a(n) EmptyButton
     private TreasureGameView treasureGameView;
 
     /**
-     * Purpose: Construct a TreasureButton
+     * Purpose: Create a TrollButton
      * Input: 1 TreasureGame, 1 TreasureGameView
      * Output: None
      */
-    public TreasureButton(TreasureGame newTreasureGame, TreasureGameView newTreasureGameView)
+    public TrollButton(TreasureGame newTreasureGame, TreasureGameView newTreasureGameView)
     {
         // Add the inputted params into the superclass constructor
         super(newTreasureGame, newTreasureGameView);
@@ -27,13 +20,12 @@ public class TreasureButton extends EmptyButton // is-a(n) EmptyButton
         treasureGameView = newTreasureGameView;
         // remove the EmptyButton action listener
         removeActionListener(getActionListeners()[0]);
-        // add a TreasureButtonListener as the action listener
-        addActionListener(new TreasureButtonListener(this, treasureGame, treasureGameView));
+        // add a TrollButtonListener as the action listener
+        addActionListener(new TrollButtonListener(this, treasureGame, treasureGameView));
     }
 
-    // Purpose: Return a string to set the button text to
     public String revealButtonText()
     {
-        return "$";
+        return "Troll!";
     }
 }

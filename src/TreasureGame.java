@@ -1,4 +1,4 @@
-import javax.swing.*;
+import java.util.Random;
 
 public class TreasureGame
 {
@@ -6,8 +6,14 @@ public class TreasureGame
     private int numberOfTries;
     // has-a number of treasures;
     private int numberOfTreasures;
-    // has-a number of treasures found
-    private int numberOfTreasuresFound;
+    // has-a number of points
+    private int numberOfPoints;
+    // has-many point options
+    private int[] pointOptions = {1,2,3};
+    // has-a change in point amount
+    private int changeInPointAmount = 0;
+    // has-a number of trolls
+    private int numberOfTrolls;
     // has-a TreasureGameView
     private TreasureGameView treasureGameView;
 
@@ -18,8 +24,10 @@ public class TreasureGame
         numberOfTries = 50;
         // set initial number of treasures
         numberOfTreasures = 20;
-        // set initial number of treasures found
-        numberOfTreasuresFound = 0;
+        // set initial number of points
+        numberOfPoints = 0;
+        // set initial number of trolls
+        numberOfTrolls = 20;
     }
 
     // Purpose: Subtract 1 from numberOfTries
@@ -28,31 +36,40 @@ public class TreasureGame
         numberOfTries--;
     }
 
+    // Purpose: Subtract 1 from number of trolls on board and reset all treasure
+    public void foundTroll()
+    {
+        // subtract 1 from number of tries
+        reduceNumberOfTries();
+        // subtract 1 from number of trolls
+        numberOfTrolls--;
+        // set changeInPointAmount to the negative of the most recent amount of points
+        changeInPointAmount = 0 - numberOfPoints;
+        // reset number of points recieved
+        numberOfPoints = 0;
+    }
+
     /**
      * Purpose: Update data and text fields when a treasure is found
      * Input: 4 JTextFields
      * Output: None
      */
-    public void foundTreasure(JTextField lastMoveText, JTextField triesLeftText, JTextField treasuresLeftText, JTextField treasuresFoundText)
+    public void foundTreasure()
     {
-        // if the game isn't over...
-        if(!isGameOver())
-        {
-            // subtract 1 from number of tries
-            reduceNumberOfTries();
-            // subtract 1 from number of treasures
-            numberOfTreasures--;
-            // add 1 to number of treasures found
-            numberOfTreasuresFound++;
-            // update lastMoveText field
-            lastMoveText.setText("Last Move: Treasure!");
-            // update triesLeftText field
-            triesLeftText.setText("Number of Tries Left: " + Integer.toString(getNumberOfTriesLeft()));
-            // update treasuresLeftText field
-            treasuresLeftText.setText("Number of Treasures Hidden: " + Integer.toString(getNumberOfTreasuresLeft()));
-            // update treasuresFoundText field
-            treasuresFoundText.setText("Number of Treasures Found: " + Integer.toString(getNumberOfTreasuresFound()));
-        } // end of if-statement
+        // Declare random to choose a random number
+        Random randomPointIndexGenerator = new Random();
+        // Make a random number
+        int pointIndex = randomPointIndexGenerator.nextInt(3);
+        // create int to hold current numberOfPoints
+        int currentNumberOfPoints = numberOfPoints;
+        // subtract 1 from number of tries
+        reduceNumberOfTries();
+        // subtract 1 from number of treasures
+        numberOfTreasures--;
+        // add the selected index of the pointOptions array to numberOfPoints
+        numberOfPoints += pointOptions[pointIndex];
+        // assign the difference between the old number of points and the new number of points to changeInPointAmount
+        changeInPointAmount = numberOfPoints - currentNumberOfPoints;
     }
 
     /**
@@ -60,18 +77,10 @@ public class TreasureGame
      * Input: 2 JTextFields
      * Output: None
      */
-    public void foundNothing(JTextField lastMoveText, JTextField triesLeftText)
+    public void foundNothing()
     {
-        // if the game isn't over...
-        if (!isGameOver())
-        {
-            // subtract 1 from number of tries
-            reduceNumberOfTries();
-            // update lastMoveText field
-            lastMoveText.setText("Last Move: Nothing...");
-            // update triesLeftText field
-            triesLeftText.setText("Number of Tries Left: " + Integer.toString(getNumberOfTriesLeft()));
-        } // end of if-statement
+        // subtract 1 from number of tries
+        reduceNumberOfTries();
     }
 
     /** Purpose: Check if the game is over and return the boolean status
@@ -83,37 +92,13 @@ public class TreasureGame
     public boolean isGameOver()
     {
         // if number of treasures found is 20 or if number of tries left is 0...
-        if (numberOfTreasuresFound == 20 || numberOfTries == 0)
+        if (numberOfTreasures == 0 || numberOfTries == 0)
         {
             // the game is over
             return true;
         }
         // the game is not over
         return false;
-    }
-
-    /**
-     * Purpose: End the game by disabling all buttons and telling the user their win status
-     * Input: JButton[], JTextField
-     * Output: None
-     */
-    public void endGame(JTextField text1)
-    {
-        // If the game is over...
-        if (isGameOver())
-        {
-            // If there are treasures left
-            if (getNumberOfTreasuresLeft() > 0)
-            {
-                // Tell player they lost
-                text1.setText("Game Over - You Lose");
-            }
-            else
-            {
-                // Tell player they won
-                text1.setText("Game Over - You Win!");
-            }
-        }
     }
 
     /**
@@ -141,14 +126,35 @@ public class TreasureGame
     }
 
     /**
-     * Purpose: return number of treasures found
+     * Purpose: return number of trolls left
      * Input: None
      * Output: int
-     * Example:
-     *  getNumberOfTreasuresFound(); return 0
+     *  getNumberOfTrolls(); return 20
      */
-    public int getNumberOfTreasuresFound()
+    public int getNumberOfTrolls()
     {
-        return numberOfTreasuresFound;
+        return numberOfTrolls;
+    }
+
+    /**
+     * Purpose: return number of points
+     * Input: None
+     * Output: int
+     *  getNumberOfPoints(); return 300;
+     */
+    public int getNumberOfPoints()
+    {
+        return numberOfPoints;
+    }
+
+    /**
+     * Purpose: return change in point amount
+     * Input: None
+     * Output: int
+     *  getChangeInPointAmount(); return 3
+     */
+    public int getChangeInPointAmount()
+    {
+        return changeInPointAmount;
     }
 }

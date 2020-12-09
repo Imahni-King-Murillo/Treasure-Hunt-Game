@@ -22,4 +22,10 @@ public class EmptyButton extends JButton
         // Add an EmptyButtonListener as the action listener
         addActionListener(new EmptyButtonListener(this, treasureGame, treasureGameView));
     }
+
+    // Purpose: Return a string to set the button text to
+    public String revealButtonText()
+    {
+        return "X";
+    }
 }

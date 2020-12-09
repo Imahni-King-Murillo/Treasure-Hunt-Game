@@ -31,7 +31,7 @@ public class EmptyButtonListener implements ActionListener
         // Take away 1 from number of tries
         treasureGameView.foundNothing();
         // Try to end game
-        treasureGameView.tryToEndGame();
+        treasureGameView.endGame();
         // Disable the button
         emptyButton.setEnabled(false);
     }

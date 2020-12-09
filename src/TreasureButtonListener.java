@@ -34,7 +34,7 @@ public class TreasureButtonListener implements ActionListener
         // Do the foundTreasure function from TreasureGame
         treasureGameView.foundTreasure();
         // Try to end game
-        treasureGameView.tryToEndGame();
+        treasureGameView.endGame();
         // Disable button
         treasureButton.setEnabled(false);
     }
